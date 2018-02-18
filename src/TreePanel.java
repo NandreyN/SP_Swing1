@@ -8,14 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class TreePanel extends JPanel {
     private List<Student> students;
-    private DefaultMutableTreeNode[] termNodes, groupNodes;
+    private DefaultMutableTreeNode[] termNodes;
+    private Map<Integer, DefaultMutableTreeNode[]> groupNodes;
     private DefaultMutableTreeNode rootNode;
     private Student lastSelectedStudent;
 
@@ -45,7 +44,7 @@ public class TreePanel extends JPanel {
         editPanel.add(deleteButton);
 
         termNodes = new DefaultMutableTreeNode[5];
-        groupNodes = new DefaultMutableTreeNode[12];
+        groupNodes = new HashMap<>();
 
         students = StudentReader.getStudents();
         rootNode = new DefaultMutableTreeNode("Students");
@@ -60,12 +59,15 @@ public class TreePanel extends JPanel {
                 rootNode.add(termNode);
             }
 
-            if (s.getGroup() < groupNodes.length && groupNodes[s.getGroup()] != null) {
-                groupNode = groupNodes[s.getGroup()];
+            if (!groupNodes.containsKey(s.getTerm()))
+                groupNodes.put(s.getTerm(), new DefaultMutableTreeNode[12]);
+
+            if (s.getGroup() < groupNodes.get(s.getTerm()).length && groupNodes.get(s.getTerm())[s.getGroup()] != null) {
+                groupNode = groupNodes.get(s.getTerm())[s.getGroup()];
             } else {
                 groupNode = new DefaultMutableTreeNode(s.getGroup());
                 termNode.add(groupNode);
-                groupNodes[s.getGroup()] = groupNode;
+                groupNodes.get(s.getTerm())[s.getGroup()] = groupNode;
             }
             groupNode.add(s);
         }
@@ -115,8 +117,6 @@ public class TreePanel extends JPanel {
                 }
                 else
                 {
-                    lastSelectedStudent.setGroup(Integer.parseInt(group.getText()));
-                    lastSelectedStudent.setTerm(Integer.parseInt(term.getText()));
                     lastSelectedStudent.setName(name.getText());
                 }
                 tree.updateUI();
@@ -126,14 +126,14 @@ public class TreePanel extends JPanel {
 
     private void remove()
     {
-        DefaultMutableTreeNode oldGroup = groupNodes[lastSelectedStudent.getGroup()];
+        DefaultMutableTreeNode oldGroup = groupNodes.get(lastSelectedStudent.getTerm())[lastSelectedStudent.getGroup()];
         oldGroup.remove(lastSelectedStudent);
         if (!oldGroup.children().hasMoreElements())
         {
             DefaultMutableTreeNode oldParent = termNodes[lastSelectedStudent.getTerm()];
             oldParent.remove(oldGroup);
             oldGroup = null;
-            groupNodes[lastSelectedStudent.getGroup()] = null;
+            groupNodes.get(lastSelectedStudent.getTerm())[lastSelectedStudent.getGroup()] = null;
             if (!oldParent.children().hasMoreElements())
             {
                 rootNode.remove(oldParent);
@@ -155,16 +155,21 @@ public class TreePanel extends JPanel {
         } else {
             termNode = new DefaultMutableTreeNode(newTerm);
             rootNode.add(termNode);
+            termNodes[student.getTerm()] = termNode;
         }
 
-        if (groupNodes[newGroup] != null)
+        if (!groupNodes.containsKey(student.getTerm()))
+            groupNodes.put(student.getTerm(), new DefaultMutableTreeNode[12]);
+
+        if (groupNodes.get(student.getTerm())[newGroup] != null)
         {
-            groupNode = groupNodes[newGroup];
+            groupNode = groupNodes.get(student.getTerm())[newGroup];
         }
         else
         {
             groupNode = new DefaultMutableTreeNode(newGroup);
             termNode.add(groupNode);
+            groupNodes.get(student.getTerm())[student.getGroup()] = groupNode;
         }
         groupNode.add(student);
     }
