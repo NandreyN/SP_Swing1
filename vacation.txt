@@ -1,0 +1,8 @@
+hr Description_HR 1250
+jm Description_JM 785
+jo Description_JO 799
+by Description_BY 600
+pe Description_PE 2500
+ua Description_UA 1200
+zw Description_ZW 1000
+ao Description_AO 740

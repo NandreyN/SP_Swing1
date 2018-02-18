@@ -1,5 +1,3 @@
-import javafx.scene.control.SelectionMode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -8,6 +6,7 @@ class CountryEntity implements Comparable<CountryEntity>
 {
     private String name, capital;
     private ImageIcon flag;
+    private String code;
 
     public CountryEntity(String name, String capital, ImageIcon flag)
     {
@@ -101,7 +100,7 @@ public class ListPanel extends JPanel {
             detailed = new JLabel();
             detailed.setSize(getWidth(), getHeight()/4);
 
-            CountryAdapter.convertToList(getter.getCountries()).stream()
+            CountryAdapter.convertToCountryEntityList(getter.getCountries()).stream()
                     .sorted(CountryEntity::compareTo).forEach(listModel::addElement);
             list = new JList<>(listModel);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

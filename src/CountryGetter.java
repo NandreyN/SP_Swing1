@@ -90,4 +90,19 @@ public class CountryGetter {
                 countriesMap.put(line[0], new Pair<>(line[1], new ImageIcon(iconPath)));
         }
     }
+
+    public  Map<String, ImageIcon> getFlagsByCode() throws FileNotFoundException {
+        Map<String, ImageIcon> dictionary = new HashMap<>();
+        Scanner in = new Scanner(new File(FILE));
+        while(in.hasNextLine())
+        {
+            String[] lines = in.nextLine().split(";");
+            if (lines.length != 3)
+                continue;
+            String iconPath = "flags-mini\\" + lines[2].toLowerCase() + ".png";
+            if (new File(iconPath).exists())
+                dictionary.put(lines[2].toLowerCase(), new ImageIcon(iconPath));
+        }
+        return dictionary;
+    }
 }
