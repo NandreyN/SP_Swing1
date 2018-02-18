@@ -11,6 +11,7 @@ class TabbedFrame extends JFrame {
         tabbedPane = new JTabbedPane();
         taskPanel1 = new ListPanel();
         taskPanel2 = new VacationPanel();
+        taskPanel3 = new TreePanel();
         tabbedPane.addTab("Task1", taskPanel1);
         tabbedPane.addTab("Task2", taskPanel2);
         tabbedPane.addTab("Task3", taskPanel3);
