@@ -1,15 +1,8 @@
-import javafx.util.Pair;
-
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 class VacationCountryEntity {
     private String desc;
@@ -83,16 +76,6 @@ class VacationCountryEntity {
     }
 }
 
-
-class FlagRenderer extends JLabel implements TableCellRenderer {
-
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected, boolean hasFocus, int row, int column) {
-        setIcon((ImageIcon)value);
-        return this;
-    }
-}
-
 public class VacationTableModel extends DefaultTableModel {
     private List<VacationCountryEntity> countries;
     private static final String[] HEADERS = {"Flag", "Code", "Description", "Price", "Select"};
@@ -101,10 +84,9 @@ public class VacationTableModel extends DefaultTableModel {
         this.countries = data;
     }
 
-    public int getSum()
+    private int getSum()
     {
-        int sum = (int) countries.stream().filter(VacationCountryEntity::getSelected).mapToLong(VacationCountryEntity::getPrice).sum();
-        return sum;
+        return (int) countries.stream().filter(VacationCountryEntity::getSelected).mapToLong(VacationCountryEntity::getPrice).sum();
     }
 
     @Override

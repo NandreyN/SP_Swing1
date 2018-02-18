@@ -14,9 +14,4 @@ public class CountryAdapter {
         });
         return entities;
     }
-
-    public static List<CountryEntity> convertToVacationEntityList()
-    {
-        return null;
-    }
 }

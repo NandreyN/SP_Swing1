@@ -16,10 +16,9 @@ public class VacationGetter {
 
     public VacationGetter() throws IOException {
         CountryGetter cGetter = new CountryGetter();
-        List<CountryEntity> countryFlags = CountryAdapter.convertToCountryEntityList(cGetter.getCountries());
+        //List<CountryEntity> countryFlags = CountryAdapter.convertToCountryEntityList(cGetter.getCountries());
         Map<String, ImageIcon> icons = cGetter.getFlagsByCode();
         readVacationData(icons);
-        mergeWithFlags(icons);
     }
 
     private void readVacationData(Map<String, ImageIcon> icons) throws FileNotFoundException {
@@ -36,14 +35,6 @@ public class VacationGetter {
             Integer price = Integer.parseInt(line[2]);
             countryData.add(new VacationCountryEntity(code, flag, desc, price, false));
         }
-    }
-
-    private void mergeWithFlags(Map<String, ImageIcon> icons)
-    {
-        countryData.forEach(x->{
-            if (icons.containsKey(x.getCode().toLowerCase()))
-                x.setFlag(icons.get(x.getCode().toLowerCase()));
-        });
     }
 
     public List<VacationCountryEntity> getVacationData()
