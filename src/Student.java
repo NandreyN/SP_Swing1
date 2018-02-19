@@ -1,6 +1,6 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class Student extends DefaultMutableTreeNode {
+public class Student{
     private String name;
     private int term;
     private int group;
@@ -10,6 +10,13 @@ public class Student extends DefaultMutableTreeNode {
         this.setName(name);
         this.setGroup(group);
         this.setTerm(term);
+    }
+
+    public Student (Student s)
+    {
+        this.setName(s.getName());
+        this.setGroup(s.getGroup());
+        this.setTerm(s.getTerm());
     }
 
     public String getName() {

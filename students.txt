@@ -1,4 +1,4 @@
-Naumovich 2 1
+QQQ 2 1
 ABCD 2 2
 AAA 2 2
 IOPIP 2 1
