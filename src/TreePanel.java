@@ -41,10 +41,10 @@ class StudentCellRenderer extends DefaultTreeCellRenderer {
             label.setIcon(stIcon);
             label.setText(((Student) o).getName());
         } else if (o instanceof Term) {
-            label.setText(String.valueOf(((Term) o).getTermNumber()));
+            label.setText(o.toString());
             label.setIcon(termIcon);
         } else if (o instanceof Group) {
-            label.setText(String.valueOf(((Group) o).getGroupNumber()));
+            label.setText(o.toString());
             label.setIcon(groupIcon);
         } else {
             label.setText(o.toString());

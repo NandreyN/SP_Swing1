@@ -10,4 +10,9 @@ public class Term {
         return termNumber;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Term " + getTermNumber();
+    }
 }

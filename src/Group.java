@@ -8,4 +8,10 @@ public class Group {
     {
         return groupNumber;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Group " + getGroupNumber();
+    }
 }
