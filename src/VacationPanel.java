@@ -38,9 +38,17 @@ class AddPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "Unknown country code");
                     return;
                 }
+                int intValue;
+                try{
+                    intValue = Integer.parseInt(price.getText());
+                }
+                catch (NumberFormatException e1)
+                {
+                    return;
+                }
 
-                VacationCountryEntity entity = new VacationCountryEntity(codes.getSelectedItem().toString(), flag, description.getText(),
-                        Integer.parseInt(price.getText()), false);
+                VacationCountryEntity entity = new VacationCountryEntity(codes.getSelectedItem().toString(), flag,description.getText(),
+                        intValue, false);
                 vacationData.add(entity);
                 ((DefaultTableModel) table.getModel()).fireTableDataChanged();
             }

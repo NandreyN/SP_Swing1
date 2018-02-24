@@ -65,13 +65,11 @@ class VacationCountryEntity {
         this.price = price;
     }
 
-    public ImageIcon getFlag()
-    {
+    public ImageIcon getFlag() {
         return flag;
     }
 
-    public void setFlag(ImageIcon flag)
-    {
+    public void setFlag(ImageIcon flag) {
         this.flag = flag;
     }
 }
@@ -84,8 +82,7 @@ public class VacationTableModel extends DefaultTableModel {
         this.countries = data;
     }
 
-    private int getSum()
-    {
+    private int getSum() {
         return (int) countries.stream().filter(VacationCountryEntity::getSelected).mapToLong(VacationCountryEntity::getPrice).sum();
     }
 
@@ -117,6 +114,10 @@ public class VacationTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        if (row == countries.size())
+            return false;
+        if (col == 0)
+            return false;
         return true;
     }
 
@@ -141,8 +142,13 @@ public class VacationTableModel extends DefaultTableModel {
                 e.setDesc((String) value);
                 break;
             case 3:
-                e.setPrice((Integer) value);
-                fireTableCellUpdated(countries.size(), 3);
+                try {
+                    int newCost = (Integer) value;
+                    e.setPrice(newCost);
+                    fireTableCellUpdated(countries.size(), 3);
+                } catch (NumberFormatException ex) {
+                    return;
+                }
                 break;
             case 4:
                 e.setSelected((Boolean) value);
@@ -154,14 +160,10 @@ public class VacationTableModel extends DefaultTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (rowIndex == countries.size())
-        {
-            if (columnIndex == 3)
-            {
+        if (rowIndex == countries.size()) {
+            if (columnIndex == 3) {
                 return getSum();
-            }
-            else
-                return null;
+            } else return null;
         }
         switch (columnIndex) {
             case 0:

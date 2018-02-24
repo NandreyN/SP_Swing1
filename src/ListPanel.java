@@ -102,6 +102,7 @@ public class ListPanel extends JPanel {
 
             CountryAdapter.convertToCountryEntityList(getter.getCountries()).stream()
                     .sorted(CountryEntity::compareTo).forEach(listModel::addElement);
+
             list = new JList<>(listModel);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             list.setCellRenderer(new CountryRenderer(detailed));
